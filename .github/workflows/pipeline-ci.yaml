@@ -9,7 +9,7 @@ on:
       - main
     
 jobs:
-    build:
+    Build:
         runs-on: ubuntu-latest
         steps:
             - name: Clonacion de Codigo
@@ -26,9 +26,9 @@ jobs:
                     #mvn package
                     echo 'package'
                     
-            - name: Test Unitarios
-              run: |
-                mvn package test
+            #- name: Test Unitarios
+            #  run: |
+            #    mvn package test
             
             #- name: Analisis SonarCloud
             #  run: |
@@ -38,22 +38,22 @@ jobs:
             #    -Dsonar.organization=cristian-aliaga \
             #    -Dsonar.projectKey=java-app
 
-            - name: Cache SonarQube package
-              uses: actions/cache@v4
-              with:
-                path: ~/.sonar/cache
-                key: ${{ runner.os }}-sonar
-                restore-keys: ${{ runner.os }}-sonar
-            - name: Cache Maven packages
-              uses: actions/cache@v4
-              with:
-                path: ~/.m2
-                key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-                restore-keys: ${{ runner.os }}-m2
-            - name: Build and analyze
-              env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cristian-aliaga_java-app
+            #- name: Cache SonarQube package
+            #  uses: actions/cache@v4
+            #  with:
+            #    path: ~/.sonar/cache
+            #    key: ${{ runner.os }}-sonar
+            #    restore-keys: ${{ runner.os }}-sonar
+            #- name: Cache Maven packages
+            #  uses: actions/cache@v4
+            #  with:
+            #    path: ~/.m2
+            #    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+            #    restore-keys: ${{ runner.os }}-m2
+            #- name: Build and analyze
+            #  env:
+            #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            #  run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cristian-aliaga_java-app
             
             - name: Docker Login
               uses: docker/login-action@v3.1.0
@@ -73,6 +73,7 @@ jobs:
                 docker push ${{ secrets.DOCKERHUB_USERNAME }}/repo-image:latest
 
     Test:
+        needs: Build
         runs-on: ubuntu-latest
         steps:
             - name: Clonacion de Codigo
@@ -88,8 +89,38 @@ jobs:
               run: |
                 mvn package test                
 
-    deploy:
-            needs: build
+    Analyze:
+        needs: Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clonacion de Codigo
+              uses: actions/checkout@v3
+
+            - name: Setup Java JDK
+              uses: actions/setup-java@v4.2.1
+              with:
+                java-version: '17'
+                distribution: 'temurin'
+
+            - name: Cache SonarQube package
+              uses: actions/cache@v4
+              with:
+                  path: ~/.sonar/cache
+                  key: ${{ runner.os }}-sonar
+                  restore-keys: ${{ runner.os }}-sonar
+            - name: Cache Maven packages
+              uses: actions/cache@v4
+              with:
+                  path: ~/.m2
+                  key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+                  restore-keys: ${{ runner.os }}-m2
+            - name: Build and analyze
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cristian-aliaga_java-app
+
+    Deploy:
+            needs: Build
             runs-on: self-hosted
                 
             steps:
