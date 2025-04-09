@@ -120,7 +120,7 @@ jobs:
               run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cristian-aliaga_java-app
 
     Deploy:
-            needs: Build
+            needs: Analyze
             runs-on: self-hosted
                 
             steps:
