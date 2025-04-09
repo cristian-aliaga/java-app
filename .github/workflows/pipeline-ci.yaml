@@ -61,7 +61,7 @@ jobs:
 
     Build:
       name: Build and Push Docker Image
-      needs: Test
+      needs: Analyze
       runs-on: ubuntu-latest
       steps:
           - name: Clonacion de Codigo
@@ -98,7 +98,7 @@ jobs:
 
     Deploy:
         name: Deploy Container
-        needs: Analyze
+        needs: Build
         runs-on: self-hosted
         steps:
             - name: Clonacion de Codigo
