@@ -23,7 +23,7 @@ jobs:
 
             - name: Compilacion
               run: |
-                    #mvn package
+                    mvn package
                     echo 'package'
                     
             #- name: Test Unitarios
