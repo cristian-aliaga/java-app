@@ -71,7 +71,23 @@ jobs:
             - name: Docker Push
               run: |
                 docker push ${{ secrets.DOCKERHUB_USERNAME }}/repo-image:latest
-        
+
+    Test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clonacion de Codigo
+              uses: actions/checkout@v3
+
+            - name: Setup Java JDK
+              uses: actions/setup-java@v4.2.1
+              with:
+                java-version: '17'
+                distribution: 'temurin'
+
+            - name: Test Unitarios
+              run: |
+                mvn package test                
+
     deploy:
             needs: build
             runs-on: self-hosted
