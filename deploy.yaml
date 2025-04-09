@@ -16,4 +16,4 @@ spec:
         - name: java-app
           image: cristianaliaga/repo-image:latest
           ports:
-            - containerPort: 8090
+            - containerPort: 8080

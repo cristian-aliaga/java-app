@@ -62,7 +62,9 @@ jobs:
             steps:
                 - name: Clonacion de Codigo
                   uses: actions/checkout@v4
-                - name: Despliegue Container
+                - name: Despliegue Docker Container
                   run: |
-                    docker build -f Dockerfile -t java-app:latest .
-                    docker push java-app:latest
+                    docker pull cristianaliaga/repo-image:latest
+                    docker stop java-app || true
+                    docker rm java-app || true
+                    docker run -d --name java-app -p 8080:8080 cristianaliaga/repo-image:latest
