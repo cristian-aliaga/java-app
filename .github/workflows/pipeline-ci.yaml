@@ -61,10 +61,8 @@ jobs:
                 
             steps:
                 - name: Clonacion de Codigo
-                  uses: actions/checkout@v3
-                - name: Validate Kubernetes Manifests
+                  uses: actions/checkout@v4
+                - name: Despliegue Container
                   run: |
-                    kubectl apply --dry-run=client -f deploy.yaml
-                - name: Despliegue Test Runner Kubernetes
-                  run: |
-                    kubectl apply -f deploy.yaml --validate=false --insecure-skip-tls-verify=true
+                    docker build -f Dockerfile -t java-app:latest .
+                    docker push java-app:latest
