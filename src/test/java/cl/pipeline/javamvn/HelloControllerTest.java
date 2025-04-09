@@ -9,13 +9,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(HelloController.class)
-public class HelloControllerTest {
+class HelloControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testHello() throws Exception {
+    void testHello() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello, World!"));
