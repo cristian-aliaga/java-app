@@ -13,7 +13,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
           - name: Clonacion de Codigo
-            uses: actions/checkout@v3.0.2
+            uses: actions/checkout@v4
             with:
               fetch-depth: 0
           - name: Setup Java JDK
@@ -30,7 +30,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Clonacion de Codigo
-              uses: actions/checkout@v3.0.2
+              uses: actions/checkout@v4
               with:
                 fetch-depth: 0
             - name: Setup Java JDK
@@ -62,7 +62,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
           - name: Clonacion de Codigo
-            uses: actions/checkout@v3.0.2
+            uses: actions/checkout@v4
             with:
               fetch-depth: 0
           - name: Setup Java JDK
@@ -92,7 +92,7 @@ jobs:
         runs-on: self-hosted
         steps:
             - name: Clonacion de Codigo
-              uses: actions/checkout@v3.0.2
+              uses: actions/checkout@v4
               with:
                 fetch-depth: 0
             - name: Despliegue Docker Container
