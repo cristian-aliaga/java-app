@@ -104,7 +104,7 @@ jobs:
               uses: actions/checkout@v4
               with:
                 fetch-depth: 0
-            - name: Deploy Docker Container With Versioning
+            - name: Deploy Docker Container With Versioning Git Tag
               run: |
                     docker pull cristianaliaga/repo-image-$(git describe --tags):latest
                     docker stop java-app || true
