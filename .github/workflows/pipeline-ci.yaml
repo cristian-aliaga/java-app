@@ -52,6 +52,15 @@ jobs:
                   path: ~/.m2
                   key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
                   restore-keys: ${{ runner.os }}-m2
+            - name: Check Quality Gate
+              run: |
+                  STATUS=$(curl -s -u "${{ secrets.SONAR_TOKEN }}:" \
+                    "https://sonarcloud.io/api/qualitygates/project_status?projectKey=your_project_key" \
+                    | jq -r '.projectStatus.status')
+                  if [ "$STATUS" != "OK" ]; then
+                    echo "Quality Gate failed: $STATUS"
+                    exit 1
+                  fi
             - name: Build and analyze
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
