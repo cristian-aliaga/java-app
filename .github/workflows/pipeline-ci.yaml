@@ -106,7 +106,7 @@ jobs:
                 fetch-depth: 0
             - name: Deploy Docker Container
               run: |
-                    docker pull cristianaliaga/repo-image:latest
+                    docker pull cristianaliaga/repo-image$(git describe --tags):latest
                     docker stop java-app || true
                     docker rm java-app || true
                     docker run -d --name java-app -p 8443:8443 cristianaliaga/repo-image$(git describe --tags):latest
