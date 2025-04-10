@@ -109,4 +109,4 @@ jobs:
                     docker pull cristianaliaga/repo-image:latest
                     docker stop java-app || true
                     docker rm java-app || true
-                    docker run -d --name java-app -p 8443:8443 cristianaliaga/repo-image:latest
+                    docker run -d --name java-app -p 8443:8443 cristianaliaga/repo-image$(git describe --tags):latest
