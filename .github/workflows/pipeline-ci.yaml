@@ -12,7 +12,7 @@ jobs:
       name: Unit Test
       runs-on: ubuntu-latest
       steps:
-          - name: Clonacion de Codigo
+          - name: Code Clone
             uses: actions/checkout@v4
             with:
               fetch-depth: 0
@@ -21,7 +21,7 @@ jobs:
             with:
               java-version: '17'
               distribution: 'temurin'
-          - name: Test Unitarios
+          - name: Unit Test
             run: |
               mvn package test
     Analyze:
@@ -61,7 +61,7 @@ jobs:
       needs: Analyze
       runs-on: ubuntu-latest
       steps:
-          - name: Clonacion de Codigo
+          - name: Code Clone
             uses: actions/checkout@v4
             with:
               fetch-depth: 0
@@ -70,7 +70,7 @@ jobs:
             with:
               java-version: '17'
               distribution: 'temurin'
-          - name: Compilacion
+          - name: Compilation
             run: |
                   mvn package
           - name: Docker Login
@@ -91,11 +91,11 @@ jobs:
         needs: Build
         runs-on: self-hosted
         steps:
-            - name: Clonacion de Codigo
+            - name: Code Clone
               uses: actions/checkout@v4
               with:
                 fetch-depth: 0
-            - name: Despliegue Docker Container
+            - name: Deploy Docker Container
               run: |
                     docker pull cristianaliaga/repo-image:latest
                     docker stop java-app || true
