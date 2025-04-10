@@ -46,13 +46,6 @@ jobs:
                   path: ~/.sonar/cache
                   key: ${{ runner.os }}-sonar
                   restore-keys: ${{ runner.os }}-sonar
-            - name: SonarQube Scan
-              uses: SonarSource/sonarcloud-github-action@v2
-              with:
-                projectBaseDir: .
-              env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              continue-on-error: false
             - name: Cache Maven packages
               uses: actions/cache@v4
               with:
