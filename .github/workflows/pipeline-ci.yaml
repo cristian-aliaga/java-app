@@ -52,6 +52,8 @@ jobs:
                 projectBaseDir: .
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                SONAR_PROJECT_KEY: cristian-aliaga_java-app
+                SONAR_ORGANIZATION: cristian-aliaga
               continue-on-error: false
             - name: Cache Maven packages
               uses: actions/cache@v4
